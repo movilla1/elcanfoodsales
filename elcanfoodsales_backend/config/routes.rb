@@ -14,7 +14,9 @@ Rails.application.routes.draw do
       resources :clients
       resources :stocks
       resources :suppliers
-      resources :sales
+      resources :sales do
+        resources :sale_lines
+      end
     end
   end
 end
