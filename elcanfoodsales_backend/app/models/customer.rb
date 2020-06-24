@@ -1,3 +1,5 @@
-class Client < ApplicationRecord
+class Customer < ApplicationRecord
   belongs_to :user
+
+  has_many :sales
 end

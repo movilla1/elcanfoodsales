@@ -5,4 +5,7 @@ class Supplier < ApplicationRecord
   validates :contact_name, presence: true
   enum status: %i[active banned closed inactive]
 
+  belongs_to :user
+
+  has_many :products
 end

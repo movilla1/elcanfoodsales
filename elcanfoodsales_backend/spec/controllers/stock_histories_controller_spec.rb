@@ -23,10 +23,10 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe StocksController, type: :controller do
+RSpec.describe StockHistoriesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
-  # Stock. As you add validations to Stock, be sure to
+  # StockHistory As you add validations to Stock, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
@@ -43,7 +43,7 @@ RSpec.describe StocksController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      stock = Stock.create! valid_attributes
+      stock = StockHistorycreate! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -51,7 +51,7 @@ RSpec.describe StocksController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      stock = Stock.create! valid_attributes
+      stock = StockHistorycreate! valid_attributes
       get :show, params: {id: stock.to_param}, session: valid_session
       expect(response).to be_successful
     end
@@ -70,7 +70,7 @@ RSpec.describe StocksController, type: :controller do
         post :create, params: {stock: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(stock_url(Stock.last))
+        expect(response.location).to eq(stock_url(StockHistorylast))
       end
     end
 
@@ -91,14 +91,14 @@ RSpec.describe StocksController, type: :controller do
       }
 
       it "updates the requested stock" do
-        stock = Stock.create! valid_attributes
+        stock = StockHistorycreate! valid_attributes
         put :update, params: {id: stock.to_param, stock: new_attributes}, session: valid_session
         stock.reload
         skip("Add assertions for updated state")
       end
 
       it "renders a JSON response with the stock" do
-        stock = Stock.create! valid_attributes
+        stock = StockHistorycreate! valid_attributes
 
         put :update, params: {id: stock.to_param, stock: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:ok)
@@ -108,7 +108,7 @@ RSpec.describe StocksController, type: :controller do
 
     context "with invalid params" do
       it "renders a JSON response with errors for the stock" do
-        stock = Stock.create! valid_attributes
+        stock = StockHistorycreate! valid_attributes
 
         put :update, params: {id: stock.to_param, stock: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
@@ -119,7 +119,7 @@ RSpec.describe StocksController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested stock" do
-      stock = Stock.create! valid_attributes
+      stock = StockHistorycreate! valid_attributes
       expect {
         delete :destroy, params: {id: stock.to_param}, session: valid_session
       }.to change(Stock, :count).by(-1)
