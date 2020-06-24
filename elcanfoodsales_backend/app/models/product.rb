@@ -4,6 +4,7 @@ class Product < ApplicationRecord
   belongs_to :user
   has_many :purchases
   has_many :stock_histories
+  has_one_attached :image
 
   enum status: %i[active obsolete inactive]
 end
