@@ -1,13 +1,13 @@
-# README
+# Elcan Food Sales
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app will help a store owner track the purchases and sales for his business, using rails backend and angular front end.
+This is the backend side.
 
-Things you may want to cover:
+Steps to install:
 
-* Ruby version
+* Ruby version 2.6.5 is required
 
-* System dependencies
+* System dependencies, postgresql for the database
 
 * Configuration
 
@@ -21,4 +21,5 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+Author: Mario O. Villarroel
+(c) ElcanSoftware 2020.
