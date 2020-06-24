@@ -7,16 +7,18 @@ Rails.application.routes.draw do
     namespace :v1 do
       # Auth route
       post '/authenticate', to: 'authentication#authenticate'
-      resources :users, only: %i[show create update destroy]
       resources :addresses
+      resources :customers
+      resources :prices
+      resources :price_lists
       resources :products
       resources :purchases
-      resources :clients
-      resources :stocks
-      resources :suppliers
       resources :sales do
         resources :sale_lines
       end
+      resources :stocks
+      resources :suppliers
+      resources :users, only: %i[show create update destroy]
     end
   end
 end
