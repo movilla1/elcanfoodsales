@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :suppliers
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :api, defaults: { format: :json } do
@@ -12,6 +11,10 @@ Rails.application.routes.draw do
       resources :addresses
       resources :products
       resources :purchases
+      resources :clients
+      resources :stocks
+      resources :suppliers
+      resources :sales
     end
   end
 end
