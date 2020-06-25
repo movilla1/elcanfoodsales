@@ -37,3 +37,6 @@ en:
       customer:
         errors:
           email_or_phone: "e-mail or phone must be present"
+      price_list:
+        errors:
+          valid_through_past: "Valid through must be null or in the future"

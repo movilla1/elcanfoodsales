@@ -2,14 +2,20 @@
 
 class PriceList < ApplicationRecord
   validates :name, presence: true
-  validates :valid_through,
-    timeliness: {
-      on_or_before: -> { Date.current },
-      type: :date
-    }
+  validate :valid_through_in_the_future_or_nil
 
   belongs_to :user
   has_many :prices
 
-  enum status: %i[active inactive expired]
+  enum status: { :active => 0, :inactive => 1, :expired => 2 }
+
+  scope :valid, -> { where("valid_through >= CURRENT_TIMESTAMP") }
+
+  private
+
+  def valid_through_in_the_future_or_nil
+    return true if valid_through.blank?
+    return true if (valid_through - Time.current).positive?
+    errors.add(:base, I18n.t("api.models.price_list.errors.valid_through_past"))
+  end
 end
