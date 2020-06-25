@@ -33,3 +33,7 @@ en:
   api:
     error:
       unauthorized: 'This is not a authorized request.'
+    models:
+      customer:
+        errors:
+          email_or_phone: "e-mail or phone must be present"
