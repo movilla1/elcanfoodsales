@@ -2,6 +2,10 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 2.6
 
+inherit_from:
+  - .rubocop_airbnb.yml
+  - .rubocop_todo.yml
+
 # Commonly used screens these days easily fit more than 80 characters.
 Layout/LineLength:
   Max: 120
