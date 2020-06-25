@@ -16,6 +16,7 @@ RSpec.describe Customer, type: :model do
         user_id: usr.id
       )
     end
+
     it "wont validate without email and phone" do
       @customer.phone = nil
       @customer.email = nil

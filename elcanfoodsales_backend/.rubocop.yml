@@ -1,13 +1,14 @@
 AllCops:
-  NewCops: enable
   TargetRubyVersion: 2.6
+
+require: rubocop-rails
 
 inherit_from:
   - .rubocop_airbnb.yml
   - .rubocop_todo.yml
 
 # Commonly used screens these days easily fit more than 80 characters.
-Layout/LineLength:
+Metrics/LineLength:
   Max: 120
 
 # Too short methods lead to extraction of single-use methods, which can make
@@ -20,12 +21,9 @@ Metrics/ClassLength:
   Max: 1500
 
 # Layout for hashes
-Layout/ParameterAlignment:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
-# Layout for arguments
-Layout/ArgumentAlignment:
-  EnforcedStyle: with_fixed_indentation
   # Single quotes being faster is hardly measurable and only affects parse time.
 # Enforcing double quotes reduces the times where you need to change them
 # when introducing an interpolation. Use single quotes only if their semantics
@@ -35,10 +33,10 @@ Style/StringLiterals:
 
 # We do not need to support Ruby 1.9, so this is good to use.
 Style/SymbolArray:
-  Enabled: true
+  EnforcedStyle: percent
 
 # Most readable form.
-Layout/HashAlignment:
+Layout/AlignHash:
   EnforcedHashRocketStyle: key
   EnforcedColonStyle: key
 
