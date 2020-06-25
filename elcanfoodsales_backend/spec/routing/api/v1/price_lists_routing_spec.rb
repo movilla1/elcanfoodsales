@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PriceListsController, type: :routing do
+RSpec.describe Api::V1::PriceListsController, type: :routing do
   describe "routing" do
     it "routes to #index" do
       expect(:get => "/price_lists").to route_to("price_lists#index")

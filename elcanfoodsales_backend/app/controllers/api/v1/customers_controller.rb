@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module Api
   module V1
-    class CustomerController < ApplicationController
+    class CustomersController < ApplicationController
       before_action :set_customer, only: %i[show update destroy]
 
       # GET /customers

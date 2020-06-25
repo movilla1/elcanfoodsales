@@ -23,10 +23,10 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe PriceListsController, type: :controller do
+RSpec.describe Api::V1::StockHistoriesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
-  # PriceList. As you add validations to PriceList, be sure to
+  # StockHistory As you add validations to Stock, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
@@ -38,12 +38,12 @@ RSpec.describe PriceListsController, type: :controller do
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # PriceListsController. Be sure to keep this updated too.
+  # StocksController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe "GET #index" do
     it "returns a success response" do
-      price_list = PriceList.create! valid_attributes
+      stock = StockHistorycreate! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -51,33 +51,33 @@ RSpec.describe PriceListsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      price_list = PriceList.create! valid_attributes
-      get :show, params: {id: price_list.to_param}, session: valid_session
+      stock = StockHistorycreate! valid_attributes
+      get :show, params: {id: stock.to_param}, session: valid_session
       expect(response).to be_successful
     end
   end
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new PriceList" do
+      it "creates a new Stock" do
         expect {
-          post :create, params: {price_list: valid_attributes}, session: valid_session
-        }.to change(PriceList, :count).by(1)
+          post :create, params: {stock: valid_attributes}, session: valid_session
+        }.to change(Stock, :count).by(1)
       end
 
-      it "renders a JSON response with the new price_list" do
+      it "renders a JSON response with the new stock" do
 
-        post :create, params: {price_list: valid_attributes}, session: valid_session
+        post :create, params: {stock: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(price_list_url(PriceList.last))
+        expect(response.location).to eq(stock_url(StockHistorylast))
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the new price_list" do
+      it "renders a JSON response with errors for the new stock" do
 
-        post :create, params: {price_list: invalid_attributes}, session: valid_session
+        post :create, params: {stock: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -90,27 +90,27 @@ RSpec.describe PriceListsController, type: :controller do
         skip("Add a hash of attributes valid for your model")
       }
 
-      it "updates the requested price_list" do
-        price_list = PriceList.create! valid_attributes
-        put :update, params: {id: price_list.to_param, price_list: new_attributes}, session: valid_session
-        price_list.reload
+      it "updates the requested stock" do
+        stock = StockHistorycreate! valid_attributes
+        put :update, params: {id: stock.to_param, stock: new_attributes}, session: valid_session
+        stock.reload
         skip("Add assertions for updated state")
       end
 
-      it "renders a JSON response with the price_list" do
-        price_list = PriceList.create! valid_attributes
+      it "renders a JSON response with the stock" do
+        stock = StockHistorycreate! valid_attributes
 
-        put :update, params: {id: price_list.to_param, price_list: valid_attributes}, session: valid_session
+        put :update, params: {id: stock.to_param, stock: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the price_list" do
-        price_list = PriceList.create! valid_attributes
+      it "renders a JSON response with errors for the stock" do
+        stock = StockHistorycreate! valid_attributes
 
-        put :update, params: {id: price_list.to_param, price_list: invalid_attributes}, session: valid_session
+        put :update, params: {id: stock.to_param, stock: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -118,11 +118,11 @@ RSpec.describe PriceListsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested price_list" do
-      price_list = PriceList.create! valid_attributes
+    it "destroys the requested stock" do
+      stock = StockHistorycreate! valid_attributes
       expect {
-        delete :destroy, params: {id: price_list.to_param}, session: valid_session
-      }.to change(PriceList, :count).by(-1)
+        delete :destroy, params: {id: stock.to_param}, session: valid_session
+      }.to change(Stock, :count).by(-1)
     end
   end
 

@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class StockHistoryHistoriesController < ApplicationController
+    class StockHistoriesController < ApplicationController
       before_action :set_stock_history, only: %i[show update destroy]
 
       # GET /stock_histories

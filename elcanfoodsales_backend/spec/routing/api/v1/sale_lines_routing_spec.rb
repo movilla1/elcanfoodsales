@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SaleLinesController, type: :routing do
+RSpec.describe Api::V1::Sales::SaleLinesController, type: :routing do
   describe "routing" do
     it "routes to #index" do
       expect(:get => "/sale_lines").to route_to("sale_lines#index")
