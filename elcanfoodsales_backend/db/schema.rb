@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 2020_06_25_120516) do
     t.bigint "price_list_id", null: false
     t.float "price"
     t.integer "status"
-    t.datetime "valid_until"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["price_list_id"], name: "index_prices_on_price_list_id"

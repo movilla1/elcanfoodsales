@@ -43,4 +43,22 @@ RSpec.describe PriceList, type: :model do
       expect(PriceList.valid.first.id).to eq(@price_list.id)
     end
   end
+
+  describe "Functions" do
+    before do
+      user = FactoryBot.create(:user)
+      @price_list = PriceList.create(
+        name: "Blabla price 1",
+        valid_through: (Date.today + 2.days),
+        user_id: user.id,
+      )
+      @price = FactoryBot.create(:price, price_list_id: @price_list.id, user_id: user.id)
+    end
+
+    it "updates status when the price list updates" do
+      @price_list.status = 'inactive'
+      @price_list.save
+      expect(@price.reload.inactive?).to eq(true)
+    end
+  end
 end
