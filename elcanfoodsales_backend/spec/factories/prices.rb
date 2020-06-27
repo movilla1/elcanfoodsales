@@ -5,7 +5,6 @@
 #  id            :bigint           not null, primary key
 #  price         :float
 #  status        :integer
-#  valid_until   :datetime
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  price_list_id :bigint           not null

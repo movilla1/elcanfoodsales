@@ -6,6 +6,7 @@ class CreateSaleLines < ActiveRecord::Migration[6.0]
       t.float :subtotal
       t.references :sale, null: false, foreign_key: true
       t.integer :status
+      t.references :user, null: false, foreign_key: true
 
       t.timestamps
     end

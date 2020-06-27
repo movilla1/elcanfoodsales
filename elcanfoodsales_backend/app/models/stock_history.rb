@@ -3,6 +3,7 @@
 # Table name: stock_histories
 #
 #  id         :bigint           not null, primary key
+#  operation  :integer          default(0)
 #  quantity   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -22,4 +23,6 @@
 class StockHistory < ApplicationRecord
   belongs_to :product
   belongs_to :user
+
+  enum operations: { :add => 0, :remove => 1, :reconcile => 2 }
 end

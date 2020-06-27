@@ -22,8 +22,15 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-require 'rails_helper'
-
-RSpec.describe Supplier, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+FactoryBot.define do
+  factory :supplier do
+    contact_name { Faker::Name.name }
+    address { Faker::Address.street_address }
+    date_start { Date.today }
+    email { Faker::Internet.email }
+    name { Faker::Name.name }
+    phone { "+1-244-2133" }
+    status { "active" }
+    association :user
+  end
 end

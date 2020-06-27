@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  notes       :string
+#  status      :integer
 #  total       :float
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -23,5 +24,40 @@
 require 'rails_helper'
 
 RSpec.describe Sale, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Validations" do
+    before do
+      customer = FactoryBot.create(:customer)
+      @user = FactoryBot.create(:user)
+      @sale = Sale.new(
+        notes: "Lorem impsum sir dolor amet brava deus et domum",
+        total: 0,
+        customer_id: customer.id,
+        user_id: @user.id
+      )
+    end
+
+    it "fails to save without customer" do
+    end
+
+    it "fails to save with negative totals" do
+    end
+  end
+
+  describe "Functions" do
+    before do
+      customer = FactoryBot.create(:customer)
+      @user = FactoryBot.create(:user)
+      @sale = Sale.new(
+        notes: "Lorem impsum sir dolor amet brava deus et domum",
+        total: 0,
+        customer_id: customer.id,
+        user_id: @user.id
+      )
+      @sale_line = FactoryBot.create(:Sale_line, sale_id: @sale.id)
+      @sale_line2 = FactoryBot.create(:Sale_line, sale_id: @sale.id)
+    end
+
+    it "calculates the total sale" do
+    end
+  end
 end

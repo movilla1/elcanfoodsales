@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_25_120516) do
+ActiveRecord::Schema.define(version: 2020_06_27_200642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 2020_06_25_120516) do
     t.bigint "price_list_id", null: false
     t.float "price"
     t.integer "status"
-    t.datetime "valid_until"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["price_list_id"], name: "index_prices_on_price_list_id"
@@ -109,6 +108,12 @@ ActiveRecord::Schema.define(version: 2020_06_25_120516) do
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "product_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "supplier_id", null: false
+    t.index ["product_id"], name: "index_purchases_on_product_id"
+    t.index ["supplier_id"], name: "index_purchases_on_supplier_id"
+    t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
   create_table "sale_lines", force: :cascade do |t|
@@ -117,10 +122,12 @@ ActiveRecord::Schema.define(version: 2020_06_25_120516) do
     t.float "subtotal"
     t.bigint "sale_id", null: false
     t.integer "status"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_sale_lines_on_product_id"
     t.index ["sale_id"], name: "index_sale_lines_on_sale_id"
+    t.index ["user_id"], name: "index_sale_lines_on_user_id"
   end
 
   create_table "sales", force: :cascade do |t|
@@ -130,6 +137,7 @@ ActiveRecord::Schema.define(version: 2020_06_25_120516) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "notes"
+    t.integer "status"
     t.index ["customer_id"], name: "index_sales_on_customer_id"
     t.index ["user_id"], name: "index_sales_on_user_id"
   end
@@ -140,6 +148,7 @@ ActiveRecord::Schema.define(version: 2020_06_25_120516) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "operation", default: 0
     t.index ["product_id"], name: "index_stock_histories_on_product_id"
     t.index ["user_id"], name: "index_stock_histories_on_user_id"
   end
@@ -149,10 +158,13 @@ ActiveRecord::Schema.define(version: 2020_06_25_120516) do
     t.string "name"
     t.string "phone"
     t.string "email"
+    t.string "address"
     t.string "contact_name"
     t.integer "status"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_suppliers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -187,10 +199,15 @@ ActiveRecord::Schema.define(version: 2020_06_25_120516) do
   add_foreign_key "prices", "products"
   add_foreign_key "prices", "users"
   add_foreign_key "products", "users"
+  add_foreign_key "purchases", "products"
+  add_foreign_key "purchases", "suppliers"
+  add_foreign_key "purchases", "users"
   add_foreign_key "sale_lines", "products"
   add_foreign_key "sale_lines", "sales"
+  add_foreign_key "sale_lines", "users"
   add_foreign_key "sales", "customers"
   add_foreign_key "sales", "users"
   add_foreign_key "stock_histories", "products"
   add_foreign_key "stock_histories", "users"
+  add_foreign_key "suppliers", "users"
 end

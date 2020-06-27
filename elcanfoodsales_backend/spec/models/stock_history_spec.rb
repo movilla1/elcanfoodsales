@@ -3,6 +3,7 @@
 # Table name: stock_histories
 #
 #  id         :bigint           not null, primary key
+#  operation  :integer          default(0)
 #  quantity   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

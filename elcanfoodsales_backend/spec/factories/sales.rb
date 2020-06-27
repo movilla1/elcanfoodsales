@@ -21,12 +21,8 @@
 #  fk_rails_...  (customer_id => customers.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class Sale < ApplicationRecord
-  belongs_to :customer
-  belongs_to :user
-
-  has_many :sale_lines
-  has_many :products, through: :sale_lines
-
-  enum status: { :new => 0, :completed => 1, :paid => 2, :refunded => 3, :cancelled => 4 }
+FactoryBot.define do
+  factory :sale do
+    
+  end
 end

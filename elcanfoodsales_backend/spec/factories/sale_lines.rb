@@ -24,8 +24,13 @@
 #  fk_rails_...  (sale_id => sales.id)
 #  fk_rails_...  (user_id => users.id)
 #
-require 'rails_helper'
-
-RSpec.describe SaleLine, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+FactoryBot.define do
+  factory :sale_line do
+    quantity { rand(10) }
+    status { 0 }
+    subtotal { rand(35) }
+    association :user
+    association :product
+    association :sale
+  end
 end
