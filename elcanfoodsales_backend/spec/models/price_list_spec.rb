@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: price_lists
+#
+#  id            :bigint           not null, primary key
+#  name          :string
+#  status        :integer
+#  valid_through :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  user_id       :bigint           not null
+#
+# Indexes
+#
+#  index_price_lists_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 require 'rails_helper'
 
 RSpec.describe PriceList, type: :model do
@@ -55,10 +75,16 @@ RSpec.describe PriceList, type: :model do
       @price = FactoryBot.create(:price, price_list_id: @price_list.id, user_id: user.id)
     end
 
-    it "updates status when the price list updates" do
+    it "deactivates prices when the price list deactivates" do
       @price_list.status = 'inactive'
       @price_list.save
       expect(@price.reload.inactive?).to eq(true)
+    end
+
+    it "expires prices when the list expires" do
+      @price_list.status = 'expired'
+      @price_list.save
+      expect(@price.reload.expired?).to eq(true)
     end
   end
 end
