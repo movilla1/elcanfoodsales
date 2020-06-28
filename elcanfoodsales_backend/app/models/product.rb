@@ -36,4 +36,9 @@ class Product < ApplicationRecord
   validates :name, presence: true, length: { minimum: 4 }
   validates :quantity, numericality: { greater_than_or_equal_to: 0 }
   validates :weight, presence: true, numericality: { greater_than: 0 }
+
+  def decrease_stock(qty)
+    self.quantity -= qty
+    save!
+  end
 end

@@ -29,11 +29,11 @@ class SaleLine < ApplicationRecord
   belongs_to :sale
 
   validates :quantity, numericality: { greater_than: 0 }
-  validates :subtotal, numericality: { greather_than: 0 }
+  validates :subtotal, numericality: { greater_than: 0 }
 
   enum status: { :new_sale => 0, :completed => 1, :paid => 2, :refunded => 3, :cancelled => 4 }
 
   def decrease_stock
-    product.update(quantity: self.product.quantity - self.quantity)
+    product.decrease_stock quantity
   end
 end
