@@ -26,7 +26,7 @@
 #
 FactoryBot.define do
   factory :sale_line do
-    quantity { rand(10) }
+    quantity { 1 + rand(10) }
     status { 0 }
     subtotal { rand(35) }
     association :user

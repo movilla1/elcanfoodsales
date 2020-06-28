@@ -28,7 +28,7 @@ FactoryBot.define do
     phone { Faker::PhoneNumber.phone_number }
     email { Faker::Internet.email }
     pet_name { Faker::Types.rb_string }
-    pet_type { Faker::Types.rb_string }
+    pet_type { 'dog' }
     user
   end
 end

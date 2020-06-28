@@ -28,7 +28,7 @@ FactoryBot.define do
     description { Faker::Food.description }
     size { Faker::Number.number(digits: 2) }
     weight { Faker::Number.number(digits: 2) }
-    quantity { Faker::Number.number(digits: 2) }
+    quantity { 3 + Faker::Number.number(digits: 3) }
     association :user
   end
 end

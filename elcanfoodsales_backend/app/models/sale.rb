@@ -27,6 +27,27 @@ class Sale < ApplicationRecord
 
   has_many :sale_lines
   has_many :products, through: :sale_lines
+  validates :total, numericality: { greater_than_or_equal_to: 0 }
+  enum status: { :new_sale => 0, :completed => 1, :paid => 2, :refunded => 3, :cancelled => 4 }
 
-  enum status: { :new => 0, :completed => 1, :paid => 2, :refunded => 3, :cancelled => 4 }
+  before_save :update_totals_if_completed
+  after_save :discount_stock_if_paid
+
+  private
+
+  def update_totals_if_completed
+    if status_changed? && completed?
+      self.total = 0
+      sale_lines.each do |sl|
+        self.total += sl.subtotal
+      end
+    end
+  end
+
+  def discount_stock_if_paid
+    return unless paid?
+    sale_lines.each do |sl|
+      sl.decrease_stock
+    end
+  end
 end
