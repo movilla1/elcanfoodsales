@@ -25,11 +25,20 @@
 class Supplier < ApplicationRecord
   validates :name, presence: true, length: { minimum: 3 }
   validates :address, presence: true, length: { minimum: 5 }
-  validates :email, presence: true
+  validate :email_or_phone
   validates :contact_name, presence: true
+
   enum status: { :active => 0, :banned => 1, :closed => 2, :inactive => 3 }
 
   belongs_to :user
 
   has_many :products
+
+  private
+
+  def email_or_phone
+    phone_or_email_present = phone.present? || email.present?
+    return true if phone_or_email_present
+    errors.add(:base, I18n.t("api.models.supplier.errors.email_or_phone"))
+  end
 end
