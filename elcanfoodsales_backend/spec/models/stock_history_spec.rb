@@ -23,5 +23,5 @@
 require 'rails_helper'
 
 RSpec.describe StockHistory, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  pending "This is just to load the model, it's a logging model, no validations or special functions needed"
 end
