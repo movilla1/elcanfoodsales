@@ -65,5 +65,8 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
   config.include FactoryBot::Syntax::Methods
-
+  config.before :all, type: :request do
+    user = FactoryBot.create(:user)
+    @header = { 'Authorization' => JsonWebToken.encode(user_id: user.id) }
+  end
 end

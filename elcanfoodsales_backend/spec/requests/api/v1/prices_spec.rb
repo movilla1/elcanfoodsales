@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::Prices", type: :request do
-  describe "GET /api/v1/prices" do
     it "works! (now write some real specs)" do
-      get prices_path
+      get api_v1_prices_path, headers: @header
       expect(response).to have_http_status(200)
     end
   end

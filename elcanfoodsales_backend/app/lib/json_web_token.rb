@@ -5,7 +5,7 @@ class JsonWebToken
       secret_key_base = Rails.application.secrets.secret_key_base
       JWT.encode(payload, secret_key_base)
     end
-    
+
     def decode(token)
       secret_key_base = Rails.application.secrets.secret_key_base
       body = JWT.decode(token, secret_key_base)[0]

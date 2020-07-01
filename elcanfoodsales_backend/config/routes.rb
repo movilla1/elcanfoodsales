@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       end
       resources :stocks
       resources :suppliers
-      resources :users, only: %i[show create update destroy]
+      resources :users, only: %i(show create update destroy)
     end
   end
 end
