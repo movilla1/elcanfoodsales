@@ -33,6 +33,7 @@ en:
   api:
     error:
       unauthorized: 'This is not a authorized request.'
+      invalid_params: "Invalid parameters"
     models:
       customer:
         errors:

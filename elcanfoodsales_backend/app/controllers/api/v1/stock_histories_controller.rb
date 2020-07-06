@@ -3,7 +3,7 @@
 module Api
   module V1
     class StockHistoriesController < ApplicationController
-      before_action :set_stock_history, only: %i[show update destroy]
+      before_action :set_stock_history, only: %i(show update destroy)
 
       # GET /stock_histories
       def index
@@ -22,10 +22,12 @@ module Api
         @stock_history = StockHistory.new(stock_history_params)
 
         if @stock_history.save
-          render json: @stock_history, status: :created, location: @stock_history
+          render json: @stock_history, status: :created
         else
           render json: @stock_history.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # PATCH/PUT /stock_histories/1
@@ -35,6 +37,8 @@ module Api
         else
           render json: @stock_history.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # DELETE /stock_histories/1
@@ -51,7 +55,7 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def stock_history_params
-        params.require(:stock_history).permit(:quantity, :product_id)
+        params.require(:stock_history).permit(:operation, :quantity, :product_id, :user_id)
       end
     end
   end

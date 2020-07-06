@@ -8,7 +8,7 @@ module Api
       # GET /api/v1/addresses
       def index
         @addresses = Address.all
-
+        authorize @addresses
         render json: @addresses
       end
 
@@ -20,7 +20,7 @@ module Api
       # POST /api/v1/addresses
       def create
         @address = Address.new(address_params)
-
+        authorize @address
         if @address.save
           render json: @address, status: :created, location: @address
         else
@@ -47,6 +47,7 @@ module Api
       # Use callbacks to share common setup or constraints between actions.
       def set_address
         @address = Address.find(params[:id])
+        authorize @address
       end
 
       # Only allow a trusted parameter "white list" through.

@@ -29,4 +29,5 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class Admin < User
+  # signle table inheritance, with type = admin.
 end

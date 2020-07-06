@@ -24,5 +24,7 @@ class StockHistory < ApplicationRecord
   belongs_to :product
   belongs_to :user
 
-  enum operations: { :add => 0, :remove => 1, :reconcile => 2 }
+  enum operation: { :add => 0, :remove => 1, :reconcile => 2 }
+
+  validates :operation, presence: :true
 end

@@ -3,28 +3,28 @@ require "rails_helper"
 RSpec.describe Api::V1::PricesController, type: :routing do
   describe "routing" do
     it "routes to #index" do
-      expect(:get => "/prices").to route_to("prices#index")
+      expect(:get => "/api/v1/prices").to route_to("api/v1/prices#index", format: :json)
     end
 
     it "routes to #show" do
-      expect(:get => "/prices/1").to route_to("prices#show", :id => "1")
+      expect(:get => "/api/v1/prices/1").to route_to("api/v1/prices#show", :id => "1", format: :json)
     end
 
 
     it "routes to #create" do
-      expect(:post => "/prices").to route_to("prices#create")
+      expect(:post => "/api/v1/prices").to route_to("api/v1/prices#create", format: :json)
     end
 
     it "routes to #update via PUT" do
-      expect(:put => "/prices/1").to route_to("prices#update", :id => "1")
+      expect(:put => "/api/v1/prices/1").to route_to("api/v1/prices#update", :id => "1", format: :json)
     end
 
     it "routes to #update via PATCH" do
-      expect(:patch => "/prices/1").to route_to("prices#update", :id => "1")
+      expect(:patch => "/api/v1/prices/1").to route_to("api/v1/prices#update", :id => "1", format: :json)
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/prices/1").to route_to("prices#destroy", :id => "1")
+      expect(:delete => "/api/v1/prices/1").to route_to("api/v1/prices#destroy", :id => "1", format: :json)
     end
   end
 end

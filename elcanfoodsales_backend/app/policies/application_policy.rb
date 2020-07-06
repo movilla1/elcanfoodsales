@@ -11,7 +11,7 @@ class ApplicationPolicy
   end
 
   def show?
-    false
+    true
   end
 
   def create?
@@ -45,5 +45,11 @@ class ApplicationPolicy
     def resolve
       scope.all
     end
+  end
+
+  private
+
+  def admin?
+    @user.type == "Admin"
   end
 end

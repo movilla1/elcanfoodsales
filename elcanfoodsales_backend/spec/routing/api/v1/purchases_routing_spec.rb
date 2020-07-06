@@ -3,28 +3,28 @@ require "rails_helper"
 RSpec.describe Api::V1::PurchasesController, type: :routing do
   describe "routing" do
     it "routes to #index" do
-      expect(:get => "/purchases").to route_to("purchases#index")
+      expect(:get => "/api/v1/purchases").to route_to("api/v1/purchases#index", format: :json)
     end
 
     it "routes to #show" do
-      expect(:get => "/purchases/1").to route_to("purchases#show", :id => "1")
+      expect(:get => "/api/v1/purchases/1").to route_to("api/v1/purchases#show", :id => "1", format: :json)
     end
 
 
     it "routes to #create" do
-      expect(:post => "/purchases").to route_to("purchases#create")
+      expect(:post => "/api/v1/purchases").to route_to("api/v1/purchases#create", format: :json)
     end
 
     it "routes to #update via PUT" do
-      expect(:put => "/purchases/1").to route_to("purchases#update", :id => "1")
+      expect(:put => "/api/v1/purchases/1").to route_to("api/v1/purchases#update", :id => "1", format: :json)
     end
 
     it "routes to #update via PATCH" do
-      expect(:patch => "/purchases/1").to route_to("purchases#update", :id => "1")
+      expect(:patch => "/api/v1/purchases/1").to route_to("api/v1/purchases#update", :id => "1", format: :json)
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/purchases/1").to route_to("purchases#destroy", :id => "1")
+      expect(:delete => "/api/v1/purchases/1").to route_to("api/v1/purchases#destroy", :id => "1", format: :json)
     end
   end
 end

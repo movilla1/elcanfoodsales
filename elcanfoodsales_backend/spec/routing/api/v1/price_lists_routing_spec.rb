@@ -3,28 +3,28 @@ require "rails_helper"
 RSpec.describe Api::V1::PriceListsController, type: :routing do
   describe "routing" do
     it "routes to #index" do
-      expect(:get => "/price_lists").to route_to("price_lists#index")
+      expect(:get => "/api/v1/price_lists").to route_to("api/v1/price_lists#index", format: :json)
     end
 
     it "routes to #show" do
-      expect(:get => "/price_lists/1").to route_to("price_lists#show", :id => "1")
+      expect(:get => "/api/v1/price_lists/1").to route_to("api/v1/price_lists#show", :id => "1", format: :json)
     end
 
 
     it "routes to #create" do
-      expect(:post => "/price_lists").to route_to("price_lists#create")
+      expect(:post => "/api/v1/price_lists").to route_to("api/v1/price_lists#create", format: :json)
     end
 
     it "routes to #update via PUT" do
-      expect(:put => "/price_lists/1").to route_to("price_lists#update", :id => "1")
+      expect(:put => "/api/v1/price_lists/1").to route_to("api/v1/price_lists#update", :id => "1", format: :json)
     end
 
     it "routes to #update via PATCH" do
-      expect(:patch => "/price_lists/1").to route_to("price_lists#update", :id => "1")
+      expect(:patch => "/api/v1/price_lists/1").to route_to("api/v1/price_lists#update", :id => "1", format: :json)
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/price_lists/1").to route_to("price_lists#destroy", :id => "1")
+      expect(:delete => "/api/v1/price_lists/1").to route_to("api/v1/price_lists#destroy", :id => "1", format: :json)
     end
   end
 end
