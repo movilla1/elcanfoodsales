@@ -26,6 +26,7 @@ class Address < ApplicationRecord
   validates :street, presence: true
   validates :city, presence: true
   validates :province, presence: true
+  validates :user_id, presence: true
 
   belongs_to :user
 end
