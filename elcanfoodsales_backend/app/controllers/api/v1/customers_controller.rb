@@ -7,7 +7,7 @@ module Api
       # GET /customers
       def index
         @customers = Customer.all
-
+        authorize @customers
         render json: @customers
       end
 
@@ -18,13 +18,15 @@ module Api
 
       # POST /customers
       def create
-        @customer = customer.new(customer_params)
-
+        @customer = Customer.new(customer_params)
+        authorize @customer
         if @customer.save
-          render json: @customer, status: :created, location: @customer
+          render json: @customer, status: :created
         else
           render json: @customer.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # PATCH/PUT /customers/1
@@ -34,6 +36,8 @@ module Api
         else
           render json: @customer.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # DELETE /customers/1
@@ -46,6 +50,7 @@ module Api
       # Use callbacks to share common setup or constraints between actions.
       def set_customer
         @customer = Customer.find(params[:id])
+        authorize @customer
       end
 
       # Only allow a trusted parameter "white list" through.
