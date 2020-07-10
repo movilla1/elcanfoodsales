@@ -14,6 +14,10 @@ class PriceListPolicy < ApplicationPolicy
   end
 
   def index?
-    true
+    @user.present?
+  end
+
+  def show?
+    @user.present?
   end
 end

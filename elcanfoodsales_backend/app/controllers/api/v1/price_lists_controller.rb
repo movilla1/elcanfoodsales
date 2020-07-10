@@ -6,7 +6,7 @@ module Api
       # GET /price_lists
       def index
         @price_lists = PriceList.all
-
+        authorize @price_lists
         render json: @price_lists
       end
 
@@ -18,12 +18,14 @@ module Api
       # POST /price_lists
       def create
         @price_list = PriceList.new(price_list_params)
-
+        authorize @price_list
         if @price_list.save
-          render json: @price_list, status: :created, location: @price_list
+          render json: @price_list, status: :created
         else
           render json: @price_list.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: "Invalid request", status: :unprocessable_entity
       end
 
       # PATCH/PUT /price_lists/1
@@ -33,6 +35,8 @@ module Api
         else
           render json: @price_list.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: "Invalid request", status: :unprocessable_entity
       end
 
       # DELETE /price_lists/1
@@ -41,15 +45,17 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_price_list
-          @price_list = PriceList.find(params[:id])
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def price_list_params
-          params.require(:price_list).permit(:name, :status, :user_id)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_price_list
+        @price_list = PriceList.find(params[:id])
+        authorize @price_list
+      end
+
+      # Only allow a trusted parameter "white list" through.
+      def price_list_params
+        params.require(:price_list).permit(:name, :status, :user_id, :valid_through)
+      end
     end
   end
 end
