@@ -11,8 +11,9 @@ Rails.application.routes.draw do
       post '/authenticate', to: 'authentication#authenticate'
       resources :addresses
       resources :customers
-      resources :prices
-      resources :price_lists
+      resources :price_lists do
+        resources :prices
+      end
       resources :products
       resources :purchases
       resources :sales do

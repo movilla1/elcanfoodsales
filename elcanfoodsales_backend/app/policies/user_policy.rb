@@ -5,10 +5,6 @@ class UserPolicy < ApplicationPolicy
     admin?
   end
 
-  def destroy?
-    admin?
-  end
-
   def update?
     if @user.id == @record.id || admin?
       return true

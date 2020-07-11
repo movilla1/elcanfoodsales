@@ -6,24 +6,27 @@ module Api
       # GET /products
       def index
         @products = Product.all
-
+        authorize @products
         render json: @products
       end
 
       # GET /products/1
       def show
-        render json: @product
+        render json: @product.to_json
       end
 
       # POST /products
       def create
         @product = Product.new(product_params)
-
+        authorize @product
         if @product.save
-          render json: @product, status: :created, location: @product
+          render json: @product, status: :created
         else
+          p @product.errors
           render json: @product.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # PATCH/PUT /products/1
@@ -33,6 +36,8 @@ module Api
         else
           render json: @product.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # DELETE /products/1
@@ -41,15 +46,17 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_product
-          @product = Product.find(params[:id])
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def product_params
-          params.require(:product).permit(:name, :image, :description, :size, :weight, :user_id, :active)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_product
+        @product = Product.find(params[:id])
+        authorize @product
+      end
+
+      # Only allow a trusted parameter "white list" through.
+      def product_params
+        params.require(:product).permit(:name, :image, :description, :size, :weight, :user_id, :status, :quantity)
+      end
     end
   end
 end

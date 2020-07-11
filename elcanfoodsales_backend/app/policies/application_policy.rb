@@ -1,3 +1,4 @@
+# Default policy will allow users to see and admin to update or destroy
 class ApplicationPolicy
   attr_reader :user, :record
 
@@ -6,32 +7,32 @@ class ApplicationPolicy
     @record = record
   end
 
+  def create?
+    @user.present?
+  end
+
+  def destroy?
+    admin?
+  end
+
+  def update?
+    admin?
+  end
+
   def index?
-    false
+    @user.present?
   end
 
   def show?
-    true
-  end
-
-  def create?
-    false
+    @user.present?
   end
 
   def new?
     create?
   end
 
-  def update?
-    false
-  end
-
   def edit?
     update?
-  end
-
-  def destroy?
-    false
   end
 
   class Scope

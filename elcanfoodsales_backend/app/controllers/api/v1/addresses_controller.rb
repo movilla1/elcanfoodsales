@@ -26,6 +26,8 @@ module Api
         else
           render json: @address.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # PATCH/PUT /api/v1/addresses/1
@@ -35,6 +37,8 @@ module Api
         else
           render json: @address.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # DELETE /api/v1/addresses/1

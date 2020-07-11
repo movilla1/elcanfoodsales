@@ -3,16 +3,35 @@ require 'rails_helper'
 
 
 RSpec.describe Api::V1::ProductsController, type: :controller do
-
+  let!(:user) {
+    FactoryBot.create(:user)
+  }
   # This should return the minimal set of attributes required to create a valid
   # Product. As you add validations to Product, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      description: "Sed purus justo, pulvinar at justo et, tristique lacinia tortor.",
+      name: "Funny name",
+      quantity: 4,
+      size: "10k",
+      status: "active",
+      weight: 10,
+      user_id: user.id,
+      image: File.read("tmp/supermario-baloons.jpg"),
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      description: "Failed description text",
+      name: "Funny name",
+      quantity: -1,
+      size: "10k",
+      status: "active",
+      weight: 0,
+      user_id: user.id,
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -23,6 +42,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
   describe "GET #index" do
     it "returns a success response" do
       product = Product.create! valid_attributes
+      request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -31,6 +51,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       product = Product.create! valid_attributes
+      request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
       get :show, params: {id: product.to_param}, session: valid_session
       expect(response).to be_successful
     end
@@ -40,25 +61,25 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     context "with valid params" do
       it "creates a new Product" do
         expect {
+          request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
           post :create, params: {product: valid_attributes}, session: valid_session
         }.to change(Product, :count).by(1)
       end
 
       it "renders a JSON response with the new product" do
-
+        request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
         post :create, params: {product: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(product_url(Product.last))
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
 
     context "with invalid params" do
       it "renders a JSON response with errors for the new product" do
-
+        request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
         post :create, params: {product: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
   end
@@ -66,32 +87,42 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          description: "Lorem ipsum sir dolor amet",
+          name: "Fixed name",
+          quantity: 4,
+          size: "10k",
+          status: "active",
+          weight: 10,
+          user_id: user.id,
+        }
       }
 
       it "updates the requested product" do
         product = Product.create! valid_attributes
+        request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
         put :update, params: {id: product.to_param, product: new_attributes}, session: valid_session
         product.reload
-        skip("Add assertions for updated state")
+        expect(product.name).to eq("Fixed name")
+        expect(product.description).to eq("Lorem ipsum sir dolor amet")
       end
 
       it "renders a JSON response with the product" do
         product = Product.create! valid_attributes
-
+        request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
         put :update, params: {id: product.to_param, product: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
 
     context "with invalid params" do
       it "renders a JSON response with errors for the product" do
         product = Product.create! valid_attributes
-
+        request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
         put :update, params: {id: product.to_param, product: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
   end
@@ -100,6 +131,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     it "destroys the requested product" do
       product = Product.create! valid_attributes
       expect {
+        request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
         delete :destroy, params: {id: product.to_param}, session: valid_session
       }.to change(Product, :count).by(-1)
     end

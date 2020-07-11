@@ -41,4 +41,8 @@ class Product < ApplicationRecord
     self.quantity -= qty
     save!
   end
+
+  def image_file
+    rails_blob_path(self.image, only_path: true) if object.photo.attached?
+  end
 end

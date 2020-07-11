@@ -6,7 +6,7 @@ module Api
       # GET /purchases
       def index
         @purchases = Purchase.all
-
+        authorize @purchases
         render json: @purchases
       end
 
@@ -18,12 +18,14 @@ module Api
       # POST /purchases
       def create
         @purchase = Purchase.new(purchase_params)
-
+        authorize @purchase
         if @purchase.save
           render json: @purchase, status: :created, location: @purchase
         else
           render json: @purchase.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # PATCH/PUT /purchases/1
@@ -33,6 +35,8 @@ module Api
         else
           render json: @purchase.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # DELETE /purchases/1
@@ -41,15 +45,17 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_purchase
-          @purchase = Purchase.find(params[:id])
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def purchase_params
-          params.require(:purchase).permit(:date, :price, :quantity, :note, :status, :product_id)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_purchase
+        @purchase = Purchase.find(params[:id])
+        authorize @purchase
+      end
+
+      # Only allow a trusted parameter "white list" through.
+      def purchase_params
+        params.require(:purchase).permit(:date, :price, :quantity, :note, :status, :product_id)
+      end
     end
   end
 end

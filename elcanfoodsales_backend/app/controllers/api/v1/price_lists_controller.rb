@@ -25,7 +25,7 @@ module Api
           render json: @price_list.errors, status: :unprocessable_entity
         end
       rescue ArgumentError => _e
-        render json: "Invalid request", status: :unprocessable_entity
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # PATCH/PUT /price_lists/1
@@ -36,7 +36,7 @@ module Api
           render json: @price_list.errors, status: :unprocessable_entity
         end
       rescue ArgumentError => _e
-        render json: "Invalid request", status: :unprocessable_entity
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # DELETE /price_lists/1
