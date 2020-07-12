@@ -88,7 +88,6 @@ ActiveRecord::Schema.define(version: 2020_06_27_200642) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.string "image"
     t.text "description"
     t.string "size"
     t.float "weight"

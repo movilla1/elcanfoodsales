@@ -1,11 +1,11 @@
 require 'rails_helper'
-
-
+require 'stringio'
 
 RSpec.describe Api::V1::ProductsController, type: :controller do
   let!(:user) {
     FactoryBot.create(:user)
   }
+  let(:file) { fixture_file_upload('tmp/supermario-baloons.jpg') }
   # This should return the minimal set of attributes required to create a valid
   # Product. As you add validations to Product, be sure to
   # adjust the attributes here as well.
@@ -18,7 +18,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       status: "active",
       weight: 10,
       user_id: user.id,
-      image: File.read("tmp/supermario-baloons.jpg"),
+      image: file,
     }
   }
 
@@ -41,7 +41,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      product = Product.create! valid_attributes
+      Product.create! valid_attributes
       request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
@@ -52,7 +52,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     it "returns a success response" do
       product = Product.create! valid_attributes
       request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
-      get :show, params: {id: product.to_param}, session: valid_session
+      get :show, params: { id: product.to_param }, session: valid_session
       expect(response).to be_successful
     end
   end
@@ -62,13 +62,14 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       it "creates a new Product" do
         expect {
           request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
-          post :create, params: {product: valid_attributes}, session: valid_session
+          post :create, params: { product: valid_attributes }, session: valid_session
         }.to change(Product, :count).by(1)
       end
 
       it "renders a JSON response with the new product" do
         request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
-        post :create, params: {product: valid_attributes}, session: valid_session
+        post :create, params: { product: valid_attributes }, session: valid_session
+        p response.body
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json; charset=utf-8')
       end
@@ -77,7 +78,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     context "with invalid params" do
       it "renders a JSON response with errors for the new product" do
         request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
-        post :create, params: {product: invalid_attributes}, session: valid_session
+        post :create, params: { product: invalid_attributes }, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json; charset=utf-8')
       end
@@ -101,7 +102,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       it "updates the requested product" do
         product = Product.create! valid_attributes
         request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
-        put :update, params: {id: product.to_param, product: new_attributes}, session: valid_session
+        put :update, params: { id: product.to_param, product: new_attributes }, session: valid_session
         product.reload
         expect(product.name).to eq("Fixed name")
         expect(product.description).to eq("Lorem ipsum sir dolor amet")
@@ -110,7 +111,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       it "renders a JSON response with the product" do
         product = Product.create! valid_attributes
         request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
-        put :update, params: {id: product.to_param, product: valid_attributes}, session: valid_session
+        put :update, params: { id: product.to_param, product: valid_attributes }, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json; charset=utf-8')
       end
@@ -120,7 +121,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       it "renders a JSON response with errors for the product" do
         product = Product.create! valid_attributes
         request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
-        put :update, params: {id: product.to_param, product: invalid_attributes}, session: valid_session
+        put :update, params: { id: product.to_param, product: invalid_attributes }, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json; charset=utf-8')
       end
@@ -132,9 +133,8 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       product = Product.create! valid_attributes
       expect {
         request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
-        delete :destroy, params: {id: product.to_param}, session: valid_session
+        delete :destroy, params: { id: product.to_param }, session: valid_session
       }.to change(Product, :count).by(-1)
     end
   end
-
 end

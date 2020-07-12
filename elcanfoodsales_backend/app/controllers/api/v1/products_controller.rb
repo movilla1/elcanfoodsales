@@ -5,7 +5,7 @@ module Api
 
       # GET /products
       def index
-        @products = Product.all
+        @products = Product.all.with_attached_image.order(id: :desc)
         authorize @products
         render json: @products
       end
@@ -22,7 +22,6 @@ module Api
         if @product.save
           render json: @product, status: :created
         else
-          p @product.errors
           render json: @product.errors, status: :unprocessable_entity
         end
       rescue ArgumentError => _e

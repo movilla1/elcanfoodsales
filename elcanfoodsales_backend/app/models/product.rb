@@ -6,7 +6,6 @@
 #
 #  id          :bigint           not null, primary key
 #  description :text
-#  image       :string
 #  name        :string
 #  quantity    :integer
 #  size        :string
@@ -25,6 +24,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Product < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   belongs_to :user
   has_many :purchases
   has_many :stock_histories
@@ -36,13 +37,14 @@ class Product < ApplicationRecord
   validates :name, presence: true, length: { minimum: 4 }
   validates :quantity, numericality: { greater_than_or_equal_to: 0 }
   validates :weight, presence: true, numericality: { greater_than: 0 }
+  validates :image, presence: true
 
   def decrease_stock(qty)
     self.quantity -= qty
     save!
   end
 
-  def image_file
-    rails_blob_path(self.image, only_path: true) if object.photo.attached?
+  def get_image_url
+    url_for(image)
   end
 end
