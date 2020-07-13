@@ -1,6 +1,6 @@
 module Api
   module V1
-    module PricelList
+    module PriceLists
       class PricesController < ApplicationController
         before_action :set_price, only: [:show, :update, :destroy]
 

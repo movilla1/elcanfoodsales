@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::PriceList::PricesController, type: :controller do
+RSpec.describe Api::V1::PriceLists::PricesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Price. As you add validations to Price, be sure to

@@ -69,7 +69,6 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       it "renders a JSON response with the new product" do
         request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
         post :create, params: { product: valid_attributes }, session: valid_session
-        p response.body
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json; charset=utf-8')
       end

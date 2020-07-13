@@ -1,5 +1,5 @@
 #Default policies here
-class ProductPolicy < ApplicationPolicy
+class PurchasePolicy < ApplicationPolicy
   attr_reader :user, :record
 
 end
