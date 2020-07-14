@@ -66,16 +66,16 @@ RSpec.describe Api::V1::PriceListsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        { name: "Precio justo nuevo", status: "active", valid_through: Date.today + 1.day, user_id: user.id }
+        { name: "Precio justo nuevo", status: "active", valid_through: Date.today + 2.days, user_id: user.id }
       }
 
       it "updates the requested price_list" do
         price_list = PriceList.create! valid_attributes
         request.headers['Authorization'] = JsonWebToken.encode(user_id: @admin.id)
-        put :update, params: { id: price_list.to_param, price_list: new_attributes }, session: valid_session
+        put :update, params: { id: price_list.id, price_list: new_attributes }, session: valid_session
         price_list.reload
         expect(price_list.name).to eq("Precio justo nuevo")
-        expect(price_list.valid_through).to eq(Date.today + 1.day)
+        expect(price_list.valid_through).to eq(Date.today + 2.days)
       end
 
       it "renders a JSON response with the price_list" do

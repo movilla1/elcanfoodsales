@@ -25,7 +25,7 @@ class PriceList < ApplicationRecord
   validate :valid_through_in_the_future_or_nil
 
   belongs_to :user
-  has_many :prices
+  has_many :prices, dependent: :destroy
 
   enum status: { :active => 0, :inactive => 1, :expired => 2 }
 
