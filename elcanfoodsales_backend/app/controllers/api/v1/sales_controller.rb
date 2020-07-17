@@ -45,16 +45,17 @@ module Api
       end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_sale
-          @sale = Sale.find(params[:id])
-          authorize @sale
-        end
 
-        # Only allow a trusted parameter "white list" through.
-        def sale_params
-          params.require(:sale).permit(:customer_id, :user_id, :total)
-        end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_sale
+        @sale = Sale.find(params[:id])
+        authorize @sale
+      end
+
+      # Only allow a trusted parameter "white list" through.
+      def sale_params
+        params.require(:sale).permit(:customer_id, :user_id, :total, :notes, :status)
+      end
     end
   end
 end

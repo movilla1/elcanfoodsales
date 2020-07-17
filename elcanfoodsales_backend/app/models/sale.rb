@@ -28,6 +28,8 @@ class Sale < ApplicationRecord
   has_many :sale_lines
   has_many :products, through: :sale_lines
   validates :total, numericality: { greater_than_or_equal_to: 0 }
+  validates :user_id, presence: true
+  validates :customer_id, presence: true
   enum status: { :new_sale => 0, :completed => 1, :paid => 2, :refunded => 3, :cancelled => 4 }
 
   before_save :update_totals_if_completed
