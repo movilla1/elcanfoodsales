@@ -16,10 +16,14 @@ module Api
         authorize @user
 
         if @user.save
-          render json: @user, status: :created, location: @user
+          render json: @user, status: :created
         else
           render json: @user.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
+      rescue ActiveRecord::SubclassNotFound => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # PATCH/PUT /users/1
@@ -29,6 +33,10 @@ module Api
         else
           render json: @user.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
+      rescue ActiveRecord::SubclassNotFound => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # DELETE /users/1
@@ -46,7 +54,7 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def user_params
-        params.require(:user).permit(:first_name, :last_name, :phone, :password, :password_confirmation)
+        params.require(:user).permit(:first_name, :last_name, :phone, :password, :password_confirmation, :email, :type)
       end
     end
   end

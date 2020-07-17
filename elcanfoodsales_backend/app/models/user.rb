@@ -32,12 +32,12 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :validatable,
-         :confirmable, :trackable
+    :recoverable, :validatable,
+    :confirmable, :trackable
   validates :first_name, presence: true, length: { minimum: 3 }
   validates :last_name, presence: true, length: { minimum: 3 }
   validates :email, presence: true, format: Devise.email_regexp
-
+  validates :type, inclusion: { in: ["Admin", "User"] }
   has_many :addresses
   has_many :products
   has_many :customers
