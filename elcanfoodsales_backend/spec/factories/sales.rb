@@ -23,6 +23,10 @@
 #
 FactoryBot.define do
   factory :sale do
-    
+    notes { "Lorem ipsum sir dolor amet #{rand(2000)}" }
+    status { "new_sale" }
+    total { rand(100) + rand }
+    association :customer
+    association :user
   end
 end

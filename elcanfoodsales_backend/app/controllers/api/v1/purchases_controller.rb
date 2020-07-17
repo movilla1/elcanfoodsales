@@ -20,7 +20,7 @@ module Api
         @purchase = Purchase.new(purchase_params)
         authorize @purchase
         if @purchase.save
-          render json: @purchase, status: :created, location: @purchase
+          render json: @purchase, status: :created
         else
           render json: @purchase.errors, status: :unprocessable_entity
         end
@@ -54,7 +54,7 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def purchase_params
-        params.require(:purchase).permit(:date, :price, :quantity, :note, :status, :product_id)
+        params.require(:purchase).permit(:date, :price, :quantity, :note, :status, :product_id, :supplier_id, :user_id)
       end
     end
   end

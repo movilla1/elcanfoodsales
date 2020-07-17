@@ -1,8 +1,9 @@
 module Api
   module V1
     class PricesController < ApplicationController
-      before_action :set_price, only: [:show, :update, :destroy]
       before_action :set_price_list
+      before_action :set_price, only: [:show, :update, :destroy]
+
       # GET /prices
       def index
         @prices = @price_list.prices.all
@@ -17,13 +18,15 @@ module Api
 
       # POST /prices
       def create
-        @price = @prices.price.build(price_params)
+        @price = @price_list.prices.build(price_params)
         authorize @price
         if @price.save
-          render json: @price, status: :created, location: @price
+          render json: @price, status: :created
         else
           render json: @price.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # PATCH/PUT /prices/1
@@ -33,6 +36,8 @@ module Api
         else
           render json: @price.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # DELETE /prices/1
@@ -50,11 +55,12 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def price_params
-        params.require(:price).permit(:product_id, :user_id, :price, :status, :valid_until)
+        params.require(:price).permit(:product_id, :user_id, :price, :status, :valid_until, :price_list_id)
       end
 
       def set_price_list
         @price_list = PriceList.find(params[:price_list_id])
+        raise RecordNotFound.new("Failed to load price_list") if @price_list.blank?
       end
     end
   end
