@@ -19,7 +19,7 @@ class AuthenticateUser
 
   def api_user
     user = User.find_for_authentication(email: email)
-    unless user.present?
+    if user.blank?
       errors.add :message, "Invalid email / password - #{email}"
       return nil
     end
