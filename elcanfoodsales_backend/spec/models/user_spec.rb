@@ -43,6 +43,7 @@ RSpec.describe User, type: :model do
         password: "herepass123",
         first_name: "Tester",
         last_name: "America",
+        type: "User"
       )
     end
     it "invalid with no email" do
@@ -65,7 +66,8 @@ RSpec.describe User, type: :model do
         email: "test@here.com",
         password: "herepass124",
         first_name: "Tester2",
-        last_name: "America2"
+        last_name: "America2",
+        type: "User"
       )
       expect(@usr.save).to be(false)
     end
@@ -78,6 +80,7 @@ RSpec.describe User, type: :model do
         password: "herepass123",
         first_name: "Tester",
         last_name: "America",
+        type: "User"
       )
       @usr2 = User.create!(
         email: "test2@here.com",
