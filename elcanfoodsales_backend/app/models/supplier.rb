@@ -27,6 +27,7 @@ class Supplier < ApplicationRecord
   validates :address, presence: true, length: { minimum: 5 }
   validate :email_or_phone
   validates :contact_name, presence: true
+  validates :user_id, presence: true
 
   enum status: { :active => 0, :banned => 1, :closed => 2, :inactive => 3 }
 

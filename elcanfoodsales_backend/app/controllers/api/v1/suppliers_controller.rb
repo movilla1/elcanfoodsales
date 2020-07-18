@@ -20,10 +20,12 @@ module Api
         @supplier = Supplier.new(supplier_params)
 
         if @supplier.save
-          render json: @supplier, status: :created, location: @supplier
+          render json: @supplier, status: :created
         else
           render json: @supplier.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # PATCH/PUT /suppliers/1
@@ -33,6 +35,8 @@ module Api
         else
           render json: @supplier.errors, status: :unprocessable_entity
         end
+      rescue ArgumentError => _e
+        render json: I18n.t("api.error.invalid_params"), status: :unprocessable_entity
       end
 
       # DELETE /suppliers/1
@@ -48,7 +52,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def supplier_params
-          params.require(:supplier).permit(:date_start, :name, :phone, :email, :contact_name, :status)
+          params.require(:supplier).permit(:date_start, :name, :phone, :email, :contact_name, :status, :user_id, :address)
         end
     end
   end
