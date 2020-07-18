@@ -58,8 +58,8 @@ RSpec.describe Sale, type: :model do
         customer_id: customer.id,
         user_id: @user.id
       )
-      @sale_line = FactoryBot.create(:sale_line, sale_id: @sale.id, user_id: @user.id, product_id: @product.id)
-      @sale_line2 = FactoryBot.create(:sale_line, sale_id: @sale.id, user_id: @user.id)
+      @sale_line = FactoryBot.create(:sale_line, sale_id: @sale.id, user_id: @user.id, product_id: @product.id, subtotal: 1.1)
+      @sale_line2 = FactoryBot.create(:sale_line, sale_id: @sale.id, user_id: @user.id, subtotal: 2.2)
       @original_qty = @product.quantity
     end
 
