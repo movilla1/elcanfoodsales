@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "elcanfoodsales": {
+    "foodsalesadmin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/elcanfoodsales",
+            "outputPath": "dist/foodsalesadmin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "elcanfoodsales:build"
+            "browserTarget": "foodsalesadmin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "elcanfoodsales:build:production"
+              "browserTarget": "foodsalesadmin:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "elcanfoodsales:build"
+            "browserTarget": "foodsalesadmin:build"
           }
         },
         "test": {
@@ -114,19 +114,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "elcanfoodsales:serve"
+            "devServerTarget": "foodsalesadmin:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "elcanfoodsales:serve:production"
+              "devServerTarget": "foodsalesadmin:serve:production"
             }
           }
         }
       }
-    }
-  },
-  "defaultProject": "elcanfoodsales",
-  "cli": {
-    "analytics": "08b33bcb-9f13-4170-b5c8-104337adfb4d"
-  }
+    }},
+  "defaultProject": "foodsalesadmin"
 }
