@@ -1,8 +1,7 @@
 export class User {
   public email: string;
-  public password: string;
-  private firstName: string;
-  private lastName: string;
+  public firstName: string;
+  public lastName: string;
   private role: string;
 
   constructor(email: string, password: string) {
@@ -17,10 +16,6 @@ export class User {
   }
 
   getFullName = (): string => this.firstName + ' ' + this.lastName;
-
-  getFirstName = (): string => this.firstName;
-
-  getLastName = (): string => this.lastName;
 
   isAdmin = (): boolean => (this.role === 'admin');
 }
