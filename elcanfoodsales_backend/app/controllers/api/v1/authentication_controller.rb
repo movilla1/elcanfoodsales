@@ -12,7 +12,10 @@ module Api
         )
 
         if command.success?
-          render json: { auth_token: command.result }
+          render json: { 
+            auth_token: command.result,
+            user: User.select(:first_name, :last_name, :email).find_by(email: params[:email]),
+          }
         else
           render json: { error: command.errors }, status: :unauthorized
         end

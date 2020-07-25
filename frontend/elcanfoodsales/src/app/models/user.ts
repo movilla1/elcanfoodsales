@@ -4,9 +4,8 @@ export class User {
   public lastName: string;
   private role: string;
 
-  constructor(email: string, password: string) {
+  constructor(email: string) {
     this.email = email;
-    this.password = password;
   }
 
   setUserDetails = (fName: string, lName: string, role: string): void =>  {
